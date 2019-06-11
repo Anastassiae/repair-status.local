@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+Auth::routes(['register' => false]);
+
+//> Административная часть
+$groupDataAdmin = [
+  'namespace' => 'Admin',
+  'middleware' => 'auth',
+  'prefix' => 'admin',
+  'as' => 'admin.'
+];
+Route::group($groupDataAdmin, function () {
+    Route::resource('users', 'UserController');
 });
+//>

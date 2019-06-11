@@ -16,7 +16,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'role',
     ];
 
     /**
@@ -36,4 +39,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Должность на русском языке
+     */
+    public function getPositionAttribute()
+    {
+        switch ($this->role) {
+          case 'admin':
+            $position = 'администратор';
+            break;
+
+            case 'master':
+              $position = 'мастер';
+              break;
+
+              case 'seller':
+                $position = 'продавец';
+                break;
+
+                default:
+                  $position = 'пользователь';
+                  break;
+            }
+
+            return $position;
+        }
+
 }
